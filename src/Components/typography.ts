@@ -25,6 +25,8 @@ export const RegularText = styled.p<RegularTextProps>`
 `;
 
 export const LinkText = styled.a`
+  background: none;
+  border: none;
   color: ${({ theme }) => theme.colors.blue};
   font-size: 1.2rem;
   line-height: 1.6;
