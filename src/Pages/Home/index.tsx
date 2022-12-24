@@ -10,7 +10,6 @@ import { CardContent } from './components/CardContent';
 export function Home() {
   return (
     <HomeContainer>
-      <Header />
       <HomeContent className='container'>
         <CardProfile />
         <FieldSearch />
