@@ -7,13 +7,13 @@ import { getIssues } from '../../../../Services/HTTP/Gets/getIssues';
 import { usePostContext } from '../../../../Hooks/usePostContext';
 
 const searchFormSchema = z.object({
-  query: z.string().min(1),
+  query: z.string(),
 });
 
 type SearchFormInput = z.infer<typeof searchFormSchema>;
 
 export function FieldSearch() {
-  const { getPosts } = usePostContext();
+  const { getPosts, posts } = usePostContext();
 
   const { register, handleSubmit } = useForm<SearchFormInput>({
     resolver: zodResolver(searchFormSchema),
@@ -27,7 +27,7 @@ export function FieldSearch() {
     <FieldSearchContainer onSubmit={handleSubmit(handleSearchPost)}>
       <HeaderFieldSearch>
         <TitleText color='title'>Publications</TitleText>
-        <RegularText color='label'>6 publications</RegularText>
+        <RegularText color='label'>{`${posts.length} publications`}</RegularText>
       </HeaderFieldSearch>
       <InputSearch
         {...register('query')}

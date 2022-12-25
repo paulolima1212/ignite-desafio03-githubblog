@@ -14,46 +14,64 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { useTheme } from 'styled-components';
+import {
+  DataProfileProps,
+  getProfile,
+} from '../../../../Services/HTTP/Gets/getProfile';
+import { useEffect, useState } from 'react';
 
 export function CardProfile() {
   const { colors } = useTheme();
 
+  const [dataProfile, setDataProfile] = useState({} as DataProfileProps);
+
+  async function GetDataProfile() {
+    const data = await getProfile();
+    setDataProfile(data);
+  }
+
+  useEffect(() => {
+    GetDataProfile();
+  }, []);
+
   return (
     <CardProfileContainer className='container'>
-      <img src='https://github.com/paulolima1212.png' alt='' />
+      <img src={dataProfile.avatar_url} alt='' />
       <CardContent>
         <HeaderContainer>
           <TitleText size='l' color='title'>
-            Paulo Lima
+            {dataProfile.name}
           </TitleText>
           <Link
             icon={<FontAwesomeIcon icon={faUpRightFromSquare} />}
             text='github'
             variant='a'
-            href={'#'}
+            href={dataProfile.html_url}
+            target='_blank'
           />
         </HeaderContainer>
-        <RegularText>
-          Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu
-          viverra massa quam dignissim aenean malesuada suscipit. Nunc, volutpat
-          pulvinar vel mass.
-        </RegularText>
+        <RegularText>{dataProfile.bio}</RegularText>
         <IconsContainer>
           <ul>
             <li>
               <FontAwesomeIcon color={colors['base-label']} icon={faGithub} />{' '}
-              paulolima1212
+              {dataProfile.login}
             </li>
-            <li>
-              <FontAwesomeIcon color={colors['base-label']} icon={faBuilding} />{' '}
-              RocketSeat
-            </li>
+            {dataProfile.company && (
+              <li>
+                <FontAwesomeIcon
+                  color={colors['base-label']}
+                  icon={faBuilding}
+                />
+                {dataProfile.company}
+              </li>
+            )}
             <li>
               <FontAwesomeIcon
                 color={colors['base-label']}
                 icon={faUserGroup}
-              />{' '}
-              32 Flowers
+              />
+              {dataProfile.followers} Flowers
             </li>
           </ul>
         </IconsContainer>
