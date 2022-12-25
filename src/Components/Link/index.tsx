@@ -4,15 +4,14 @@ import { LinkContainer } from './styles';
 type LinkProps = ComponentProps<typeof LinkContainer> & {
   text: string;
   icon?: ReactNode;
-  variant: 'button' | 'a';
 };
 
-export function Link({ text, icon, variant = 'a', ...rest }: LinkProps) {
+export function Link({ text, icon, ...rest }: LinkProps) {
   return (
-    <LinkContainer as={variant} {...rest}>
-      {variant === 'button' && icon}
+    <LinkContainer {...rest}>
+      {rest.as === 'button' && icon}
       <span>{text}</span>
-      {variant === 'a' && icon}
+      {rest.as === 'a' && icon}
     </LinkContainer>
   );
 }

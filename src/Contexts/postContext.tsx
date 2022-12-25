@@ -1,5 +1,7 @@
+import { useParams } from 'react-router-dom';
 import { getIssues } from '../Services/HTTP/Gets/getIssues';
 import { ReactNode, createContext, useEffect, useState } from 'react';
+import { getPost } from '../Services/HTTP/Gets/getPost';
 
 interface PostContextProps {
   posts: PostsProps[];

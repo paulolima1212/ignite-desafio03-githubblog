@@ -10,13 +10,24 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { Link } from '../../../../Components/Link';
 import { RegularText, TitleText } from '../../../../Components/typography';
 import { useTheme } from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { DateFormat } from '../../../../Utils/Formatter';
+import { Spinner } from '../../../../Components/Spinner';
+import { usePostContext } from '../../../../Hooks/usePostContext';
+import { PostsProps } from '../../../../Contexts/postContext';
 
-export function CardPost() {
+interface CardPostProps {
+  isLoading: boolean;
+  postData: PostsProps;
+}
+
+export function CardPost({ isLoading, postData }: CardPostProps) {
   const { colors } = useTheme();
-
   const navigate = useNavigate();
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <CardPostContainer>
@@ -24,37 +35,39 @@ export function CardPost() {
         <Link
           icon={<FontAwesomeIcon icon={faChevronLeft} />}
           text='back'
-          variant='button'
-          onClick={navigate(-1)}
+          as='button'
+          onClick={() => navigate(-1)}
         />
         <Link
           icon={<FontAwesomeIcon icon={faUpRightFromSquare} />}
           text='see on github'
-          variant='a'
-          href='https://github.com/paulolima1212'
+          as='a'
+          href={postData.html_url}
           target='_blank'
         />
       </header>
-      <TitleText color='title'>
-        JavaScript data types and data structures
-      </TitleText>
+      <TitleText color='title'>{postData.title}</TitleText>
       <footer>
         <ul>
           <li>
             <FontAwesomeIcon icon={faGithub} color={colors['base-label']} />
-            <RegularText color='label'>paulolima1212</RegularText>
+            <RegularText color='label'>{postData.user.login}</RegularText>
           </li>
           <li>
             <FontAwesomeIcon
               icon={faCalendarAlt}
               color={colors['base-label']}
             />
-            <RegularText color='label'>{Date.now()}</RegularText>
+            <RegularText color='label'>
+              {DateFormat(new Date(postData.created_at))}
+            </RegularText>
           </li>
 
           <li>
             <FontAwesomeIcon icon={faComment} color={colors['base-label']} />
-            <RegularText color='label'>5 comments</RegularText>
+            <RegularText color='label'>
+              {postData.comments} comments
+            </RegularText>
           </li>
         </ul>
       </footer>
