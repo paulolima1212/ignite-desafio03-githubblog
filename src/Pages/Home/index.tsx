@@ -1,23 +1,21 @@
 import { CardProfile } from './components/CardProfile';
-import { Header } from '../../Components/Header';
-import { TitleText } from '../../Components/typography';
 import { ContentContainer, HomeContainer, HomeContent } from './styles';
-import { Link } from '../../Components/Link';
-import { ArrowArcRight } from 'phosphor-react';
 import { FieldSearch } from './components/FieldSearch';
 import { CardContent } from './components/CardContent';
+import { usePostContext } from '../../Hooks/usePostContext';
 
 export function Home() {
+  const { posts } = usePostContext();
+
   return (
     <HomeContainer>
       <HomeContent className='container'>
         <CardProfile />
         <FieldSearch />
         <ContentContainer>
-          <CardContent />
-          <CardContent />
-          <CardContent />
-          <CardContent />
+          {posts.map((post) => {
+            return <CardContent key={post.number} post={post} />;
+          })}
         </ContentContainer>
       </HomeContent>
     </HomeContainer>

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const FieldSearchContainer = styled.div`
+export const FieldSearchContainer = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;

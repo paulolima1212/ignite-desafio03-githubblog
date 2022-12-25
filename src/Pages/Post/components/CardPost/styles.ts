@@ -9,6 +9,7 @@ export const CardPostContainer = styled.div`
   background: ${({ theme }) => theme.colors['base-profile']};
   box-shadow: 0px 2px 28px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+  margin-top: -5.5rem;
 
   header {
     display: flex;

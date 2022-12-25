@@ -3,13 +3,13 @@ import { LinkContainer } from './styles';
 
 type LinkProps = ComponentProps<typeof LinkContainer> & {
   text: string;
-  icon: ReactNode;
+  icon?: ReactNode;
   variant: 'button' | 'a';
 };
 
-export function Link({ text, icon, variant = 'a' }: LinkProps) {
+export function Link({ text, icon, variant = 'a', ...rest }: LinkProps) {
   return (
-    <LinkContainer as={variant}>
+    <LinkContainer as={variant} {...rest}>
       {variant === 'button' && icon}
       <span>{text}</span>
       {variant === 'a' && icon}
